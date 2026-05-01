@@ -1,0 +1,15 @@
+{
+  "name": "PortEx",
+  "short_name": "PortEx",
+  "theme_color": "#3B82F6",
+  "background_color": "#060609",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%233B82F6'/><text x='50' y='65' font-family='sans-serif' font-weight='bold' font-size='50' fill='white' text-anchor='middle'>Px</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

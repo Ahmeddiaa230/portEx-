@@ -1,0 +1,17 @@
+{
+  "name": "portex-calculator",
+  "version": "2.0.0",
+  "description": "PortEx Rate Calculator — Vanilla JS + Node.js/Express",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.5.1"
+  }
+}
