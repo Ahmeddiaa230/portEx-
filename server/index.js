@@ -51,7 +51,21 @@ app.use((req, res, next) => {
 });
 
 // Serve static files from /public
-app.use(express.static('public'));
+const path = require('path');
+app.use('/public', express.static(path.join(__dirname, '../public')));
+
+// Serve HTML files from the root directory
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
+app.get('/:page.html', (req, res) => {
+  const safePages = ['index', 'about', 'activities', 'calculator', 'contact'];
+  if (safePages.includes(req.params.page)) {
+    res.sendFile(path.join(__dirname, `../${req.params.page}.html`));
+  } else {
+    res.status(404).send('Not found');
+  }
+});
+app.get('/sw.js', (req, res) => res.sendFile(path.join(__dirname, '../sw.js')));
+app.get('/manifest.json', (req, res) => res.sendFile(path.join(__dirname, '../manifest.json')));
 
 // Quick stats endpoint
 app.get('/api/stats/quick', (req, res) => {
