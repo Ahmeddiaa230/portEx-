@@ -16,6 +16,18 @@
   --text: #e8e8f0;
   --text-dim: #6b6b80;
   --sidebar-width: 240px;
+  
+  --nav-bg: rgba(10, 14, 26, 0.92);
+  --nav-bg-scrolled: rgba(10, 14, 26, 0.98);
+  --footer-bg: rgba(6, 10, 20, 0.95);
+  --nav-logo: #fff;
+  --nav-text: rgba(255,255,255,0.6);
+  --nav-text-hover: #fff;
+  --hero-sky: rgba(59,130,246,0.08);
+  
+  --nav-btn-bg: rgba(255,255,255,0.06);
+  --nav-btn-border: rgba(255,255,255,0.1);
+  --nav-btn-hover: rgba(255,255,255,0.12);
 }
 
 [data-theme="light"] {
@@ -25,6 +37,18 @@
   --border: rgba(0,0,0,0.08);
   --text: #0f0f1a;
   --text-dim: #6b6b80;
+  
+  --nav-bg: rgba(224, 242, 254, 0.92);
+  --nav-bg-scrolled: rgba(224, 242, 254, 0.98);
+  --footer-bg: #e0f2fe;
+  --nav-logo: #0f0f1a;
+  --nav-text: rgba(15, 15, 26, 0.6);
+  --nav-text-hover: #0f0f1a;
+  --hero-sky: #e0f2fe;
+
+  --nav-btn-bg: rgba(0,0,0,0.03);
+  --nav-btn-border: rgba(0,0,0,0.08);
+  --nav-btn-hover: rgba(0,0,0,0.06);
 }
 
 /* ===========================
@@ -326,4 +350,62 @@ h1,h2,h3,h4,h5,h6,.font-heading { font-family: 'Syne', sans-serif; }
   0%   { box-shadow: 0 0 0 0 rgba(59,130,246,0.4); }
   70%  { box-shadow: 0 0 0 10px rgba(59,130,246,0); }
   100% { box-shadow: 0 0 0 0 rgba(59,130,246,0); }
+}
+
+/* ═══════════════════════════════════════════
+   PORTEX — Multi-page Shared Styles
+   Add this block to the END of style.css
+   ═══════════════════════════════════════════ */
+
+/* ── Site Footer ── */
+.site-footer {
+  background: var(--footer-bg);
+  border-top: 1px solid var(--border);
+  padding: 3rem 4rem 1.5rem;
+  margin-top: 4rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 2.5rem;
+}
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem; font-weight: 800;
+  color: var(--nav-logo); display: inline-flex; align-items: center; gap: 4px;
+}
+.footer-tagline {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-top: 0.5rem;
+}
+.footer-copy {
+  font-size: 0.8rem; color: var(--text-dim); margin-top: 1rem;
+}
+.footer-col.footer-nav {
+  display: flex; flex-direction: column; gap: 0.6rem; padding-top: 0.25rem;
+}
+.footer-col.footer-nav a {
+  font-family: 'DM Mono', monospace; font-size: 0.8rem;
+  color: var(--nav-text); text-decoration: none;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.footer-col.footer-nav a:hover { color: #60a5fa; }
+.footer-cta-text {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  color: var(--text); font-size: 0.95rem; margin-bottom: 0.75rem;
+}
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+  font-family: 'DM Mono', monospace; font-size: 0.72rem;
+  color: var(--text-dim); text-align: center;
+}
+
+@media (max-width: 768px) {
+  .site-footer { padding: 2.5rem 1.25rem 1.5rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
 }

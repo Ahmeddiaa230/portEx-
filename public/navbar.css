@@ -1,0 +1,309 @@
+/* =============================================
+   PORTEX — Shared Navbar + Global Overrides
+   ============================================= */
+
+/* Loading Screen */
+#loadingScreen {
+  position: fixed;
+  inset: 0;
+  background: #0a0e1a;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#loadingScreen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-ocean {
+  width: 340px;
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-ocean svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ship-body {
+  animation: shipSail 3s ease-in-out infinite;
+}
+
+@keyframes shipSail {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  25% { transform: translateY(-6px) rotate(1deg); }
+  50% { transform: translateY(-10px) rotate(-1deg); }
+  75% { transform: translateY(-4px) rotate(1deg); }
+}
+
+.wave-path {
+  animation: waveMove 2s linear infinite;
+}
+.wave-path-2 {
+  animation: waveMove 2.5s linear infinite reverse;
+  opacity: 0.5;
+}
+
+@keyframes waveMove {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-80px); }
+}
+
+.loading-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.loading-brand span { color: #3B82F6; }
+
+.loading-bar-wrap {
+  width: 220px;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.loading-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3B82F6, #60a5fa);
+  border-radius: 2px;
+  animation: loadProgress 2s ease-out forwards;
+}
+@keyframes loadProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* =============================================
+   STICKY NAVBAR
+   ============================================= */
+.top-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 64px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  transition: background 0.3s ease;
+}
+
+.top-navbar.scrolled {
+  background: var(--nav-bg-scrolled);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+.navbar-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--nav-logo);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.navbar-logo .logo-accent { color: #3B82F6; }
+.navbar-logo .logo-dot {
+  width: 6px;
+  height: 6px;
+  background: #3B82F6;
+  border-radius: 50%;
+  margin-bottom: 8px;
+  animation: dotPulse 2s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.7); }
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--nav-text);
+  text-decoration: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: var(--nav-text-hover);
+  background: rgba(59,130,246,0.12);
+}
+.navbar-links a.active {
+  color: #60a5fa;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-lang-switcher {
+  background: var(--nav-btn-bg);
+  border: 1px solid var(--nav-btn-border);
+  color: var(--nav-text);
+  border-radius: 8px;
+  padding: 0.3rem 0.6rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.nav-theme-btn {
+  background: var(--nav-btn-bg);
+  border: 1px solid var(--nav-btn-border);
+  color: var(--nav-text);
+  border-radius: 8px;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+.nav-theme-btn:hover { background: var(--nav-btn-hover); }
+
+/* Hamburger for mobile */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: 1px solid var(--nav-btn-border);
+  border-radius: 8px;
+  color: var(--nav-text);
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Mobile drawer */
+.mobile-nav-drawer {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: var(--nav-bg-scrolled);
+  border-bottom: 1px solid rgba(59,130,246,0.15);
+  z-index: 999;
+  padding: 1rem 1.5rem 1.5rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  backdrop-filter: blur(16px);
+}
+.mobile-nav-drawer.open { display: flex; }
+.mobile-nav-drawer a {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--nav-text);
+  text-decoration: none;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s;
+}
+.mobile-nav-drawer a:hover,
+.mobile-nav-drawer a.active {
+  background: rgba(59,130,246,0.12);
+  color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+  .navbar-links { display: none; }
+  .nav-hamburger { display: block; }
+  .top-navbar { padding: 0 1rem; }
+}
+
+/* Push content below navbar */
+.navbar-spacer { height: 64px; }
+
+/* =============================================
+   FLOATING WHATSAPP BUTTON
+   ============================================= */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #25D366;
+  color: #fff;
+  border-radius: 50px;
+  padding: 0.75rem 1.25rem 0.75rem 1rem;
+  text-decoration: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: waFloatIn 0.5s ease 2.5s both;
+}
+@keyframes waFloatIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.floating-whatsapp:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(37, 211, 102, 0.5);
+}
+.floating-whatsapp svg { flex-shrink: 0; }
+.floating-whatsapp .wa-label { white-space: nowrap; }
+
+@media (max-width: 480px) {
+  .floating-whatsapp { padding: 0.85rem; border-radius: 50%; }
+  .floating-whatsapp .wa-label { display: none; }
+}
+
+/* =============================================
+   PAGE BODY OVERRIDES (remove sidebar layout)
+   ============================================= */
+body.multipage {
+  padding-top: 0;
+  margin: 0;
+}
+body.multipage .app-layout {
+  display: block;
+}
+body.multipage .sidebar { display: none !important; }
+body.multipage .topbar { display: none !important; }
+body.multipage .main-content {
+  margin-left: 0 !important;
+  padding-top: 0;
+  min-height: calc(100vh - 64px);
+}

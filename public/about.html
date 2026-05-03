@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — PortEx</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%233B82F6' rx='20'/><text x='50' y='65' font-family='sans-serif' font-size='50' font-weight='bold' fill='white' text-anchor='middle'>Px</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="all.min.css">
+  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="navbar.css">
+  <style>
+    /* About Page Styles */
+    .about-page { padding: 4rem; max-width: 1200px; margin: 0 auto; }
+
+    .about-hero-section {
+      text-align: center; padding: 4rem 2rem 5rem;
+      position: relative; overflow: hidden;
+    }
+    .about-hero-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .about-tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.12em; color: #60a5fa;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 50px; padding: 0.3rem 1rem; margin-bottom: 1.5rem;
+    }
+    .about-hero-section h1 {
+      font-family: 'Syne', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800; color: var(--text); letter-spacing: -0.04em; line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .about-hero-section h1 span { color: #3B82F6; }
+    .about-hero-section p {
+      font-size: 1.1rem; color: var(--text-dim); max-width: 600px;
+      margin: 0 auto 2.5rem; line-height: 1.8;
+    }
+
+    /* KPI Strip */
+    .kpi-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; margin: 0 4rem 4rem;
+    }
+    .kpi-cell {
+      background: var(--surface);
+      padding: 2rem; text-align: center;
+      transition: background 0.25s;
+    }
+    .kpi-cell:hover { background: rgba(59,130,246,0.08); }
+    .kpi-num {
+      font-family: 'Syne', sans-serif; font-size: 2.5rem; font-weight: 800;
+      color: var(--text); line-height: 1;
+    }
+    .kpi-num span { color: #3B82F6; }
+    .kpi-label {
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text-dim); margin-top: 0.5rem;
+    }
+
+    /* Story section */
+    .story-section {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: center; margin: 0 4rem 5rem;
+    }
+    .story-text h2 {
+      font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em; margin-bottom: 1.25rem;
+    }
+    .story-text p {
+      color: var(--text-dim); line-height: 1.8; font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .story-visual {
+      background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 2.5rem; display: flex; flex-direction: column; gap: 1.2rem;
+    }
+    .story-feature {
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .story-feature-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(59,130,246,0.15); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: #60a5fa; font-size: 1rem;
+    }
+    .story-feature h4 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      color: var(--text); font-size: 0.95rem; margin-bottom: 0.25rem;
+    }
+    .story-feature p { color: var(--text-dim); font-size: 0.85rem; line-height: 1.5; margin: 0; }
+
+    /* Capabilities Grid */
+    .cap-section { margin: 0 4rem 5rem; }
+    .cap-section-header { margin-bottom: 2.5rem; }
+    .cap-section-header h2 {
+      font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800;
+      color: var(--text); letter-spacing: -0.03em;
+    }
+    .cap-section-header p { color: var(--text-dim); margin-top: 0.5rem; }
+
+    .capability-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .capability-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.5rem;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .capability-card:hover {
+      transform: translateY(-3px); border-color: rgba(59,130,246,0.3);
+    }
+    .cap-icon { font-size: 1.75rem; margin-bottom: 0.8rem; }
+    .cap-title {
+      font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.5rem;
+    }
+    .cap-desc { color: var(--text-dim); font-size: 0.85rem; line-height: 1.6; }
+
+    @media (max-width: 900px) {
+      .about-page { padding: 2rem 1rem; }
+      .kpi-strip { grid-template-columns: repeat(2,1fr); margin: 0 1rem 3rem; }
+      .story-section { grid-template-columns: 1fr; gap: 2rem; margin: 0 1rem 3rem; }
+      .cap-section { margin: 0 1rem 3rem; }
+    }
+  </style>
+</head>
+<body class="multipage">
+
+  <!-- ABOUT HERO -->
+  <section class="about-hero-section">
+    <div class="about-tag">Who We Are</div>
+    <h1>Built on <span>Decades</span><br>of Expertise.</h1>
+    <p>
+      PortEx is a leading logistics and maritime company headquartered in Istanbul, Turkey.
+      With over 10 years of industry experience, we deliver reliable freight solutions
+      across sea, air, and land — backed by deep customs expertise.
+    </p>
+  </section>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi-cell">
+      <div class="kpi-num">10<span>+</span></div>
+      <div class="kpi-label">Years in Business</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-num">50<span>+</span></div>
+      <div class="kpi-label">Countries Reached</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-num">3K<span>+</span></div>
+      <div class="kpi-label">Shipments Delivered</div>
+    </div>
+    <div class="kpi-cell">
+      <div class="kpi-num">90<span>%+</span></div>
+      <div class="kpi-label">Client Satisfaction</div>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <div class="story-section">
+    <div class="story-text">
+      <h2>Our Story</h2>
+      <p>
+        Founded over a decade ago in Istanbul, PortEx began with a simple vision: to make international
+        freight accessible, transparent, and efficient for businesses of all sizes.
+      </p>
+      <p>
+        Today, we operate as a full-spectrum logistics partner — handling everything from LCL sea freight
+        and air cargo to complex multi-modal shipments requiring customs clearance across multiple jurisdictions.
+      </p>
+      <p>
+        Our Istanbul base gives us a strategic advantage at the crossroads of Europe, the Middle East,
+        and Central Asia — one of the world's most active trade corridors.
+      </p>
+    </div>
+    <div class="story-visual">
+      <div class="story-feature">
+        <div class="story-feature-icon"><i class="fa-solid fa-ship"></i></div>
+        <div>
+          <h4>Sea Freight Specialists</h4>
+          <p>Deep expertise in LCL & FCL, covering all major trade lanes from Turkish ports.</p>
+        </div>
+      </div>
+      <div class="story-feature">
+        <div class="story-feature-icon"><i class="fa-solid fa-plane-departure"></i></div>
+        <div>
+          <h4>Air Freight Network</h4>
+          <p>Priority air cargo with partnerships at IST, SAW and connections to 200+ airports.</p>
+        </div>
+      </div>
+      <div class="story-feature">
+        <div class="story-feature-icon"><i class="fa-solid fa-file-contract"></i></div>
+        <div>
+          <h4>Customs Expertise</h4>
+          <p>Full HS code classification, import/export declarations, and duty optimization.</p>
+        </div>
+      </div>
+      <div class="story-feature">
+        <div class="story-feature-icon"><i class="fa-solid fa-headset"></i></div>
+        <div>
+          <h4>Dedicated Support</h4>
+          <p>A personal account manager for every client — reachable when it matters most.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAPABILITIES -->
+  <div class="cap-section">
+    <div class="cap-section-header">
+      <h2>Our Capabilities</h2>
+      <p>What we've built over 10+ years of operations</p>
+    </div>
+    <div class="capability-grid">
+      <div class="capability-card">
+        <div class="cap-icon">🌍</div>
+        <h3 class="cap-title">EMENA Export Operations</h3>
+        <p class="cap-desc">Full management of export operations across Europe, Middle East, and North Africa.</p>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon">📈</div>
+        <h3 class="cap-title">40% Volume Growth</h3>
+        <p class="cap-desc">Drove a 40% increase in annual export volume, expanding foreign market share.</p>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon">🗺️</div>
+        <h3 class="cap-title">8 New Countries</h3>
+        <p class="cap-desc">Opened exports to 8 countries via commercial agreements with international distributors.</p>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon">⚡</div>
+        <h3 class="cap-title">20% Faster Delivery</h3>
+        <p class="cap-desc">Optimized customs and logistics processes, reducing average delivery time by 20%.</p>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon">🎯</div>
+        <h3 class="cap-title">Pricing & Positioning</h3>
+        <p class="cap-desc">Built competitive pricing and market entry strategies through deep market analysis.</p>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon">🤝</div>
+        <h3 class="cap-title">Trade Exhibitions</h3>
+        <p class="cap-desc">Represented the company at international exhibitions, establishing global partnerships.</p>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon">🛒</div>
+        <h3 class="cap-title">E-Commerce Integration</h3>
+        <p class="cap-desc">Boosted digital sales by integrating e-commerce channels with corporate networks.</p>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon">⭐</div>
+        <h3 class="cap-title">90%+ Satisfaction Rate</h3>
+        <p class="cap-desc">Managed CRM systems achieving post-sales customer satisfaction above 90%.</p>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon">📊</div>
+        <h3 class="cap-title">Sales & Performance</h3>
+        <p class="cap-desc">Led customer acquisition, target-setting, and performance analysis end-to-end.</p>
+      </div>
+      <div class="capability-card">
+        <div class="cap-icon">🔗</div>
+        <h3 class="cap-title">Sales-Production Sync</h3>
+        <p class="cap-desc">Improved demand planning efficiency via sales and production team coordination.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <div class="footer-logo">Port<span class="logo-accent">Ex</span><div class="logo-dot"></div></div>
+        <p class="footer-tagline">Intelligent Freight Platform</p>
+        <p class="footer-copy">Made by NoireByte &copy; 2025</p>
+      </div>
+      <div class="footer-col footer-nav">
+        <a href="index.html">Home</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="activities.html">Our Activities</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col footer-cta">
+        <p class="footer-cta-text">Need a freight quote?</p>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.5rem;">
+          <i class="fa-solid fa-location-dot" style="color:#3B82F6;margin-right:6px;"></i>
+          Büyükçekmece, İstanbul
+        </p>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.4rem;">
+          <i class="fa-solid fa-phone" style="color:#3B82F6;margin-right:6px;"></i>
+          +44 7781 505971
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 NoireByte — All rights reserved</span>
+    </div>
+  </footer>
+
+  <script src="shared-nav.js"></script>
+</body>
+</html>

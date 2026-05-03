@@ -1,0 +1,57 @@
+/* ═══════════════════════════════════════════
+   PORTEX — Multi-page Shared Styles
+   Add this block to the END of style.css
+   ═══════════════════════════════════════════ */
+
+/* ── Site Footer ── */
+.site-footer {
+  background: rgba(6, 10, 20, 0.95);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 3rem 4rem 1.5rem;
+  margin-top: 4rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 2.5rem;
+}
+.footer-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem; font-weight: 800;
+  color: #fff; display: inline-flex; align-items: center; gap: 4px;
+}
+.footer-tagline {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem; color: rgba(255,255,255,0.3);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  margin-top: 0.5rem;
+}
+.footer-copy {
+  font-size: 0.8rem; color: rgba(255,255,255,0.2); margin-top: 1rem;
+}
+.footer-col.footer-nav {
+  display: flex; flex-direction: column; gap: 0.6rem; padding-top: 0.25rem;
+}
+.footer-col.footer-nav a {
+  font-family: 'DM Mono', monospace; font-size: 0.8rem;
+  color: rgba(255,255,255,0.4); text-decoration: none;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.footer-col.footer-nav a:hover { color: #60a5fa; }
+.footer-cta-text {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  color: #fff; font-size: 0.95rem; margin-bottom: 0.75rem;
+}
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 1.25rem;
+  font-family: 'DM Mono', monospace; font-size: 0.72rem;
+  color: rgba(255,255,255,0.2); text-align: center;
+}
+
+@media (max-width: 768px) {
+  .site-footer { padding: 2.5rem 1.25rem 1.5rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+}

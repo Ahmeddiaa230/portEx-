@@ -16,10 +16,11 @@
     rel="stylesheet">
   <link rel="stylesheet" href="all.min.css">
   <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="navbar.css">
   <link rel="manifest" href="manifest.json">
 </head>
 
-<body>
+<body class="multipage">
   <!-- Login Modal -->
   <div class="modal-overlay hidden" id="loginModal">
     <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
@@ -81,13 +82,6 @@
           <option value="tr">TR</option>
         </select>
         <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
-        <!-- Auth button -->
-        <div class="auth-area" id="authArea">
-          <button class="auth-btn" id="authBtn" aria-label="Sign in">
-            <span class="auth-icon"><i class="fa-solid fa-arrow-right-to-bracket"></i></span>
-            <span class="auth-label" data-i18n="loginBtn">Login</span>
-          </button>
-        </div>
       </div>
     </header>
 
@@ -425,18 +419,27 @@
   <footer class="site-footer">
     <div class="footer-grid">
       <div class="footer-col footer-brand">
-        <div class="footer-logo">Port<span class="logo-accent">Ex</span>
-          <div class="logo-dot"></div>
-        </div>
+        <div class="footer-logo">Port<span class="logo-accent">Ex</span><div class="logo-dot"></div></div>
         <p class="footer-tagline" data-i18n="footerTagline">Intelligent Freight Platform</p>
         <p class="footer-copy">Made by NoireByte &copy; 2025</p>
       </div>
       <div class="footer-col footer-nav">
-        <a href="#home" data-i18n="navHome">Home</a>
-        <a href="#calculator" data-i18n="navCalculator">Calculator</a>
-        <a href="#history" data-i18n="navHistory">History</a>
-        <a href="#stats" data-i18n="navStats">Stats</a>
-        <a href="#about" data-i18n="navAbout">About</a>
+        <a href="index.html" data-i18n="navHome">Home</a>
+        <a href="calculator.html" data-i18n="navCalculator">Calculator</a>
+        <a href="activities.html">Our Activities</a>
+        <a href="about.html" data-i18n="navAbout">About Us</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col footer-cta">
+        <p class="footer-cta-text">Need a freight quote?</p>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.5rem;">
+          <i class="fa-solid fa-location-dot" style="color:#3B82F6;margin-right:6px;"></i>
+          Büyükçekmece, İstanbul, Turkey
+        </p>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.4rem;">
+          <i class="fa-solid fa-phone" style="color:#3B82F6;margin-right:6px;"></i>
+          +44 7781 505971
+        </p>
       </div>
     </div>
     <div class="footer-bottom">
@@ -444,11 +447,7 @@
     </div>
   </footer>
 
-  <!-- WhatsApp FAB -->
-  <a href="https://wa.me/447781505971" target="_blank" rel="noopener" class="wa-fab" id="waFab" aria-label="WhatsApp">
-    <i class="fa-brands fa-whatsapp"></i>
-  </a>
-
+  <script src="shared-nav.js"></script>
   <script src="app.js?v=3"></script>
   <script>
     // Force service worker update — clears stale caches
