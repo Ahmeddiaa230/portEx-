@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PortEx — Intelligent Freight Platform</title>
+  <meta name="description"
+    content="PortEx Rate Calculator: Calculate precise sea freight LCL rates, HS code customs duties, and manage shipments with multi-language support.">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%233B82F6' rx='20'/><text x='50' y='65' font-family='sans-serif' font-size='50' font-weight='bold' fill='white' text-anchor='middle'>Px</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="public/all.min.css">
+  <link rel="stylesheet" href="public/style.css">
+  <link rel="stylesheet" href="public/navbar.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body class="multipage">
+  <!-- Login Modal -->
+  <div class="modal-overlay hidden" id="loginModal">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <button class="modal-close" id="modalCloseBtn" aria-label="Close">✕</button>
+      <div class="modal-logo">Port<span class="logo-accent">Ex</span></div>
+      <h2 id="loginTitle" data-i18n="loginTitle">Sign In</h2>
+      <p class="modal-sub" data-i18n="loginSub">Access your freight workspace</p>
+      <form id="loginForm" autocomplete="on">
+        <div class="input-group">
+          <label for="loginUser" data-i18n="username">Username</label>
+          <input type="text" id="loginUser" name="username" autocomplete="username" placeholder="admin / guest">
+        </div>
+        <div class="input-group">
+          <label for="loginPass" data-i18n="password">Password</label>
+          <input type="password" id="loginPass" name="password" autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <p class="error-text" id="loginError"></p>
+        <button type="submit" class="primary-btn" id="loginSubmitBtn" data-i18n="loginBtn">Sign In</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="app-layout">
+    <!-- Topbar -->
+    <header class="topbar" id="home">
+      <div class="topbar-left">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">☰</button>
+        <a href="#home" class="logo">
+          Port<span class="logo-accent">Ex</span>
+          <div class="logo-dot"></div>
+        </a>
+        <nav class="topbar-nav" id="topbarNav">
+          <a href="#home" class="nav-item active" id="navHome">
+            <i class="fa-solid fa-house"></i>
+            <span data-i18n="navHome">Home</span>
+          </a>
+          <a href="#calculator" class="nav-item" id="navCalculator">
+            <i class="fa-solid fa-calculator"></i>
+            <span data-i18n="navCalculator">Calculator</span>
+          </a>
+          <a href="#history" class="nav-item" id="navHistory">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+            <span data-i18n="navHistory">History</span>
+          </a>
+          <a href="#stats" class="nav-item" id="navStats">
+            <i class="fa-solid fa-chart-line"></i>
+            <span data-i18n="navStats">Stats</span>
+          </a>
+          <a href="#about" class="nav-item" id="navAbout">
+            <i class="fa-solid fa-circle-info"></i>
+            <span data-i18n="navAbout">About</span>
+          </a>
+        </nav>
+      </div>
+      <div class="topbar-right">
+        <select id="langSwitcher" class="lang-switcher" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="ar">AR</option>
+          <option value="tr">TR</option>
+        </select>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+      </div>
+    </header>
+
+    <!-- Mobile nav backdrop -->
+    <div class="mobile-nav-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-container">
+
+        <!-- Stats Section -->
+        <section class="stats-grid" id="stats">
+          <div class="stat-card">
+            <div class="stat-title" data-i18n="totalCalculations">Total Calculations</div>
+            <div class="stat-value" id="statTotal">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-title" data-i18n="avgCbm">Average CBM</div>
+            <div class="stat-value" id="statAvgCbm">0.00</div>
+          </div>
+        </section>
+
+        <section class="charts-section">
+          <div class="chart-card">
+            <h3 data-i18n="topOrigins">Top Origins</h3>
+            <div class="css-bar-chart" id="originsChart"></div>
+          </div>
+          <div class="chart-card">
+            <h3 data-i18n="topDestinations">Top Destinations</h3>
+            <div class="css-bar-chart" id="destinationsChart"></div>
+          </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section class="calculator-wrapper" id="calculator">
+          <div class="calculator-header">
+            <h1 data-i18n="calcTitle">Rate Calculator</h1>
+            <p data-i18n="calcDesc">Calculate precise sea freight LCL rates instantly.</p>
+          </div>
+
+          <div class="calculator-grid">
+            <!-- Input Form -->
+            <div class="calc-form card">
+              <div class="tabs">
+                <button class="tab-btn active" data-mode="cbm" id="tabCbm" data-i18n="modeA">CBM Mode (A)</button>
+                <button class="tab-btn" data-mode="dimensions" id="tabDim" data-i18n="modeB">Dimensions Mode
+                  (B)</button>
+              </div>
+
+              <div class="ports-row">
+                <div class="input-group">
+                  <label for="originPort" data-i18n="origin">Origin Port</label>
+                  <select id="originPort">
+                    <option value="">Select Port...</option>
+                  </select>
+                </div>
+                <button class="swap-btn" id="swapPortsBtn" aria-label="Swap ports">↔</button>
+                <div class="input-group">
+                  <label for="destPort" data-i18n="destination">Destination Port</label>
+                  <select id="destPort">
+                    <option value="">Select Port...</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Mode A Fields -->
+              <div id="modeAFields" class="mode-fields">
+                <div class="input-row-3">
+                  <div class="input-group">
+                    <label for="inputCbm" data-i18n="cbm">Total CBM</label>
+                    <input type="number" id="inputCbm" value="1" min="0.1" max="10000" step="0.1">
+                  </div>
+                  <div class="input-group">
+                    <label for="inputWeight" data-i18n="weightKg">Weight (KG)</label>
+                    <input type="number" id="inputWeight" value="1000" min="1" max="500000">
+                  </div>
+                  <div class="input-group">
+                    <label for="inputPkgs" data-i18n="packages">Packages</label>
+                    <input type="number" id="inputPkgs" value="1" min="1" max="10000">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mode B Fields -->
+              <div id="modeBFields" class="mode-fields hidden">
+                <div class="input-row-5">
+                  <div class="input-group">
+                    <label for="inputL" data-i18n="lengthCm">L (cm)</label>
+                    <input type="number" id="inputL" value="100" min="1">
+                  </div>
+                  <div class="input-group">
+                    <label for="inputW" data-i18n="widthCm">W (cm)</label>
+                    <input type="number" id="inputW" value="100" min="1">
+                  </div>
+                  <div class="input-group">
+                    <label for="inputH" data-i18n="heightCm">H (cm)</label>
+                    <input type="number" id="inputH" value="100" min="1">
+                  </div>
+                  <div class="input-group">
+                    <label for="inputWtPkg" data-i18n="weightPerPkg">Wt/Pkg (KG)</label>
+                    <input type="number" id="inputWtPkg" value="1000" min="1">
+                  </div>
+                  <div class="input-group">
+                    <label for="inputQty" data-i18n="qty">Qty</label>
+                    <input type="number" id="inputQty" value="1" min="1">
+                  </div>
+                </div>
+                <div class="live-preview" id="livePreview">Preview: 1.00 m³</div>
+              </div>
+
+              <!-- Customs Toggle -->
+              <div class="customs-section">
+                <label class="toggle-label" for="customsToggle">
+                  <input type="checkbox" id="customsToggle">
+                  <span class="slider"></span>
+                  <span data-i18n="includeCustoms">Include Customs Duties (HS Code)</span>
+                </label>
+
+                <div class="customs-fields hidden" id="customsFields">
+                  <div class="input-row-2">
+                    <div class="input-group">
+                      <label for="hsCode" data-i18n="hsCodeLabel">HS Code</label>
+                      <input type="text" id="hsCode" placeholder="e.g. 7318.15">
+                      <span class="error-text" id="hsError"></span>
+                    </div>
+                    <div class="input-group">
+                      <label for="hsDesc" data-i18n="productDesc">Product Description (optional)</label>
+                      <input type="text" id="hsDesc">
+                    </div>
+                  </div>
+                  <div class="input-row-1">
+                    <div class="input-group">
+                      <label for="goodsValue" data-i18n="goodsValueLabel">Declared Goods Value (USD)</label>
+                      <input type="number" id="goodsValue" value="0" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="primary-btn" id="calculateBtn" data-i18n="btnCalculate">Calculate</button>
+              <p class="calc-disclaimer" data-i18n="calcDisclaimer">The information provided may not be accurate due to
+                limited access to customs regulations.</p>
+            </div>
+
+            <!-- Result Card -->
+            <div class="result-card" id="resultCard">
+              <!-- Admin badge — visible only when role===admin -->
+              <div class="admin-badge hidden" id="adminBadge" data-i18n="adminBadge">ADMIN VIEW — Cost Price</div>
+
+              <h3 data-i18n="rateBreakdown">Rate Breakdown</h3>
+              <div class="result-list">
+                <div class="result-row" data-tip="tipCbm">
+                  <span data-i18n="totalCbm">Total CBM:</span>
+                  <span id="resCbm" dir="ltr">-</span>
+                </div>
+                <div class="result-row" data-tip="tipWeight">
+                  <span data-i18n="chargeableWeight">Chargeable Weight:</span>
+                  <span id="resChargeWeight" dir="ltr">-</span>
+                </div>
+                <div class="result-row" data-tip="tipBase">
+                  <span data-i18n="baseRate">Base Rate:</span>
+                  <span id="resBaseRate" dir="ltr">-</span>
+                </div>
+                <div class="result-row" data-tip="tipBaf">
+                  <span>BAF:</span>
+                  <span id="resBaf" dir="ltr">-</span>
+                </div>
+                <div class="result-row" data-tip="tipCaf">
+                  <span>CAF:</span>
+                  <span id="resCaf" dir="ltr">-</span>
+                </div>
+                <div class="result-row" data-tip="tipThcO">
+                  <span data-i18n="thcOriginLabel">THC Origin:</span>
+                  <span id="resThcOrigin" dir="ltr">-</span>
+                </div>
+                <div class="result-row" data-tip="tipThcD">
+                  <span data-i18n="thcDestLabel">THC Destination:</span>
+                  <span id="resThcDest" dir="ltr">-</span>
+                </div>
+
+                <hr class="result-divider">
+                <div class="result-row subtotal">
+                  <span data-i18n="freightSubtotal">Freight Subtotal:</span>
+                  <span id="resFreightTotal" dir="ltr">-</span>
+                </div>
+
+                <div id="resCustomsBlock" class="hidden">
+                  <hr class="result-divider">
+                  <div class="result-row">
+                    <span data-i18n="hsCodeLabel">HS Code:</span>
+                    <span id="resHsCode" dir="ltr">-</span>
+                  </div>
+                  <div class="result-row">
+                    <span data-i18n="category">Category:</span>
+                    <span id="resCategory">-</span>
+                  </div>
+                  <div class="result-row">
+                    <span data-i18n="declaredValue">Declared Value:</span>
+                    <span id="resDeclaredValue" dir="ltr">-</span>
+                  </div>
+                  <div class="result-row">
+                    <span data-i18n="cifValue">CIF Value:</span>
+                    <span id="resCifValue" dir="ltr">-</span>
+                  </div>
+                  <div class="result-row">
+                    <span data-i18n="dutyRate">Duty Rate:</span>
+                    <span id="resDutyRate" dir="ltr">-</span>
+                  </div>
+                  <div class="result-row">
+                    <span data-i18n="customsClearance">Customs Clearance:</span>
+                    <span id="resCustomsDuty" dir="ltr">-</span>
+                  </div>
+                </div>
+
+                <hr class="result-divider">
+                <div class="result-row grand-total">
+                  <span id="lblGrandTotal" data-i18n="grandTotal">GRAND TOTAL:</span>
+                  <span id="resGrandTotal" dir="ltr">$0.00</span>
+                </div>
+                <div class="result-row text-xs mt-2">
+                  <span id="resEta" dir="ltr" data-i18n="etaLabel">ETA: — days</span>
+                  <span data-i18n="incoterm">Incoterm: CFR — Port to Port</span>
+                </div>
+              </div>
+
+              <div id="customsDisclaimer" class="disclaimer hidden" data-i18n="customsDisclaimer">
+                * Customs estimate only. Actual duties may vary by local regulations and declared cargo value.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="history-section" id="history">
+          <h2 data-i18n="historyTitle">Calculation History</h2>
+          <div class="table-container card">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th data-i18n="date">Date</th>
+                  <th data-i18n="origin">Origin</th>
+                  <th data-i18n="destination">Destination</th>
+                  <th data-i18n="cbm">CBM</th>
+                  <th data-i18n="totalUsd">Total (USD)</th>
+                  <th data-i18n="mode">Mode</th>
+                  <th data-i18n="actions">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="historyBody">
+                <!-- Populated by JS via event delegation -->
+              </tbody>
+            </table>
+            <div id="emptyHistory" class="empty-state hidden" data-i18n="noHistory">No calculations yet.</div>
+          </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section" id="about">
+          <div class="about-hero">
+            <div class="about-brand">Port<span class="logo-accent">EX</span></div>
+            <p class="about-tagline" data-i18n="aboutTagline">Export Intelligence. Freight Precision.</p>
+          </div>
+
+          <div class="capability-grid">
+            <div class="capability-card">
+              <div class="cap-icon">🌍</div>
+              <h3 class="cap-title" data-i18n="cap1Title">EMENA Export Operations</h3>
+              <p class="cap-desc" data-i18n="cap1Desc">Full management of export operations across Europe, Middle East,
+                and North Africa.</p>
+            </div>
+            <div class="capability-card">
+              <div class="cap-icon">📈</div>
+              <h3 class="cap-title" data-i18n="cap2Title">40% Volume Growth</h3>
+              <p class="cap-desc" data-i18n="cap2Desc">Drove a 40% increase in annual export volume, expanding foreign
+                market share.</p>
+            </div>
+            <div class="capability-card">
+              <div class="cap-icon">🗺️</div>
+              <h3 class="cap-title" data-i18n="cap3Title">8 New Countries</h3>
+              <p class="cap-desc" data-i18n="cap3Desc">Opened exports to 8 countries via commercial agreements with
+                international distributors.</p>
+            </div>
+            <div class="capability-card">
+              <div class="cap-icon">⚡</div>
+              <h3 class="cap-title" data-i18n="cap4Title">20% Faster Delivery</h3>
+              <p class="cap-desc" data-i18n="cap4Desc">Optimized customs and logistics processes, reducing average
+                delivery time by 20%.</p>
+            </div>
+            <div class="capability-card">
+              <div class="cap-icon">🎯</div>
+              <h3 class="cap-title" data-i18n="cap5Title">Pricing & Positioning</h3>
+              <p class="cap-desc" data-i18n="cap5Desc">Built competitive pricing and market entry strategies through
+                deep market analysis.</p>
+            </div>
+            <div class="capability-card">
+              <div class="cap-icon">🤝</div>
+              <h3 class="cap-title" data-i18n="cap6Title">Trade Exhibitions</h3>
+              <p class="cap-desc" data-i18n="cap6Desc">Represented the company at international exhibitions,
+                establishing global partnerships.</p>
+            </div>
+            <div class="capability-card">
+              <div class="cap-icon">🛒</div>
+              <h3 class="cap-title" data-i18n="cap7Title">E-Commerce Integration</h3>
+              <p class="cap-desc" data-i18n="cap7Desc">Boosted digital sales by integrating e-commerce channels with
+                corporate networks.</p>
+            </div>
+            <div class="capability-card">
+              <div class="cap-icon">⭐</div>
+              <h3 class="cap-title" data-i18n="cap8Title">90%+ Satisfaction Rate</h3>
+              <p class="cap-desc" data-i18n="cap8Desc">Managed CRM systems achieving post-sales customer satisfaction
+                above 90%.</p>
+            </div>
+            <div class="capability-card">
+              <div class="cap-icon">📊</div>
+              <h3 class="cap-title" data-i18n="cap9Title">Sales & Performance</h3>
+              <p class="cap-desc" data-i18n="cap9Desc">Led customer acquisition, target-setting, and performance
+                analysis end-to-end.</p>
+            </div>
+            <div class="capability-card">
+              <div class="cap-icon">🔗</div>
+              <h3 class="cap-title" data-i18n="cap10Title">Sales-Production Sync</h3>
+              <p class="cap-desc" data-i18n="cap10Desc">Improved demand planning efficiency via sales and production
+                team coordination.</p>
+            </div>
+          </div>
+
+
+        </section>
+
+      </div><!-- /.page-container -->
+    </main>
+  </div><!-- /.app-layout -->
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <div class="footer-logo">Port<span class="logo-accent">Ex</span><div class="logo-dot"></div></div>
+        <p class="footer-tagline" data-i18n="footerTagline">Intelligent Freight Platform</p>
+        <p class="footer-copy" data-i18n="footerCopy">Made by NoireByte &copy; 2025</p>
+      </div>
+      <div class="footer-col footer-nav">
+        <a href="index.html" data-i18n="navHome">Home</a>
+        <a href="calculator.html" data-i18n="navCalculator">Calculator</a>
+        <a href="activities.html" data-i18n="navActivities">Our Activities</a>
+        <a href="about.html" data-i18n="navAbout">About Us</a>
+        <a href="contact.html" data-i18n="navContact">Contact</a>
+      </div>
+      <div class="footer-col footer-cta">
+        <p class="footer-cta-text" data-i18n="footerCtaText">Need a freight quote?</p>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.5rem;">
+          <i class="fa-solid fa-location-dot" style="color:#3B82F6;margin-right:6px;"></i>
+          Büyükçekmece, İstanbul, Turkey
+        </p>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.4rem;">
+          <i class="fa-solid fa-phone" style="color:#3B82F6;margin-right:6px;"></i>
+          +44 7781 505971
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 NoireByte &mdash; All rights reserved</span>
+    </div>
+  </footer>
+
+  <script src="public/i18n.js"></script>
+  <script src="public/shared-nav.js"></script>
+  <script src="public/app.js"></script>
+  <script>
+    // Force service worker update — clears stale caches
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        reg.update();
+      }).catch(() => { });
+    }
+  </script>
+</body>
+
+</html>

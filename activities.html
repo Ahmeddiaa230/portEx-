@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Activities — PortEx</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%233B82F6' rx='20'/><text x='50' y='65' font-family='sans-serif' font-size='50' font-weight='bold' fill='white' text-anchor='middle'>Px</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="public/all.min.css">
+  <link rel="stylesheet" href="public/style.css">
+  <link rel="stylesheet" href="public/navbar.css">
+  <style>
+    /* ───── Activities Page ───── */
+    .activities-page { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 6rem; }
+
+    /* Hero */
+    .act-hero {
+      text-align: center; padding: 4rem 2rem 2rem; position: relative;
+    }
+    .act-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(59,130,246,0.13) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .act-tag {
+      display: inline-block;
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.12em; color: #60a5fa;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 50px; padding: 0.3rem 1rem; margin-bottom: 1.5rem;
+    }
+    .act-hero h1 {
+      font-family: 'Syne', sans-serif; font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800; color: var(--text); letter-spacing: -0.04em; line-height: 1.05;
+      margin-bottom: 1rem;
+    }
+    .act-hero h1 span { color: #3B82F6; }
+    .act-hero p {
+      color: var(--text-dim); font-size: 1rem; max-width: 520px;
+      margin: 0 auto 4rem; line-height: 1.8;
+    }
+
+    /* ───── Ship Track ───── */
+    .ship-track-container {
+      position: relative; width: 100%; min-height: 120px;
+      margin-bottom: 0; overflow: hidden;
+    }
+
+    /* Ocean strip */
+    .ocean-strip {
+      width: 100%; height: 90px; position: relative; overflow: hidden;
+    }
+    .ocean-strip svg { width: 100%; height: 100%; }
+
+    /* Animated ship on the path */
+    .ship-traveler {
+      position: absolute; top: 10px; left: -120px;
+      width: 100px; height: 60px;
+      animation: shipTravel 6s ease-in-out infinite;
+      will-change: transform;
+    }
+    @keyframes shipTravel {
+      0%   { left: -120px; transform: translateY(0) rotate(-1deg); }
+      20%  { transform: translateY(-5px) rotate(1deg); }
+      40%  { transform: translateY(-8px) rotate(-1deg); }
+      60%  { transform: translateY(-4px) rotate(1deg); }
+      80%  { transform: translateY(-7px) rotate(-1deg); }
+      100% { left: calc(100% + 20px); transform: translateY(0) rotate(0deg); }
+    }
+
+    /* ───── Timeline ───── */
+    .timeline-wrapper {
+      position: relative; padding: 3rem 0 2rem;
+    }
+
+    /* Vertical center line */
+    .timeline-line {
+      position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(59,130,246,0.4) 8%,
+        rgba(59,130,246,0.4) 92%,
+        transparent 100%
+      );
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      display: flex; align-items: flex-start;
+      margin-bottom: 4rem; position: relative;
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      width: 100%;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateY(0); }
+
+    /* Alternating left/right */
+    .item-left {
+      justify-content: flex-start; text-align: right;
+    }
+    .item-right {
+      justify-content: flex-end; text-align: left;
+    }
+
+    .timeline-content {
+      width: calc(50% - 3rem);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.75rem 2rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: default;
+    }
+    .timeline-content:hover {
+      border-color: rgba(59,130,246,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(59,130,246,0.1);
+    }
+
+    /* Center dot */
+    .timeline-dot {
+      position: absolute; left: 50%;
+      top: 1.75rem;
+      transform: translateX(-50%);
+      width: 16px; height: 16px;
+      background: #3B82F6; border-radius: 50%;
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.25);
+      z-index: 2;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .timeline-item:hover .timeline-dot {
+      transform: translateX(-50%) scale(1.4);
+      box-shadow: 0 0 0 6px rgba(59,130,246,0.2);
+    }
+
+    /* Connector line to dot */
+    .timeline-connector {
+      width: 3rem; flex-shrink: 0;
+      display: flex; align-items: flex-start; padding-top: 2.15rem;
+    }
+    .timeline-connector-line {
+      width: 100%; height: 2px;
+      background: linear-gradient(to right, transparent, rgba(59,130,246,0.4));
+    }
+    .item-right .timeline-connector-line {
+      background: linear-gradient(to left, transparent, rgba(59,130,246,0.4));
+    }
+
+    /* Card content */
+    .tl-year {
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      text-transform: uppercase; letter-spacing: 0.1em; color: #3B82F6;
+      margin-bottom: 0.5rem;
+    }
+    .tl-icon {
+      font-size: 1.75rem; margin-bottom: 0.75rem;
+    }
+    .tl-title {
+      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800;
+      color: var(--text); margin-bottom: 0.6rem; letter-spacing: -0.02em;
+    }
+    .tl-desc {
+      font-size: 0.875rem; color: var(--text-dim);
+      line-height: 1.7;
+    }
+    .tl-badge {
+      display: inline-block; margin-top: 0.75rem;
+      background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 50px; padding: 0.2rem 0.75rem;
+      font-family: 'DM Mono', monospace; font-size: 0.7rem;
+      text-transform: uppercase; letter-spacing: 0.06em; color: #60a5fa;
+    }
+
+    /* Mobile: single column */
+    @media (max-width: 700px) {
+      .timeline-line { left: 20px; }
+      .timeline-dot { left: 20px; }
+      .timeline-item,
+      .timeline-item:nth-child(odd),
+      .timeline-item:nth-child(even) {
+        flex-direction: column; text-align: left; padding-left: 50px;
+      }
+      .timeline-content { width: 100%; }
+      .timeline-connector { display: none; }
+      .activities-page { padding: 2rem 1rem 5rem; }
+    }
+  </style>
+</head>
+<body class="multipage">
+
+  <!-- HERO -->
+  <section class="act-hero">
+    <div class="act-tag" data-i18n="actTag">Track Record</div>
+    <h1 data-i18n="actHeroTitle">Our Journey<br>of <span>Achievement</span></h1>
+    <p data-i18n="actHeroSub">Over a decade of milestones across global logistics, maritime trade, and export management.</p>
+  </section>
+
+  <div class="activities-page">
+
+    <!-- ── SHIP ANIMATION ── -->
+    <div class="ship-track-container">
+      <div class="ocean-strip">
+        <svg viewBox="0 0 1200 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="seaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1"/>
+              <stop offset="100%" style="stop-color:#060d1a;stop-opacity:1"/>
+            </linearGradient>
+          </defs>
+          <rect width="1200" height="90" fill="url(#seaGrad)"/>
+          <!-- Wave 1 -->
+          <path d="M0 55 Q75 40 150 55 Q225 70 300 55 Q375 40 450 55 Q525 70 600 55 Q675 40 750 55 Q825 70 900 55 Q975 40 1050 55 Q1125 70 1200 55 L1200 90 L0 90 Z"
+            fill="rgba(59,130,246,0.12)">
+            <animateTransform attributeName="transform" type="translate" from="0 0" to="-150 0" dur="4s" repeatCount="indefinite"/>
+          </path>
+          <!-- Wave 2 -->
+          <path d="M0 65 Q100 50 200 65 Q300 80 400 65 Q500 50 600 65 Q700 80 800 65 Q900 50 1000 65 Q1100 80 1200 65 L1200 90 L0 90 Z"
+            fill="rgba(59,130,246,0.07)">
+            <animateTransform attributeName="transform" type="translate" from="-150 0" to="0 0" dur="5s" repeatCount="indefinite"/>
+          </path>
+          <!-- Wave crest details -->
+          <path d="M0 52 Q40 47 80 52 M200 50 Q240 45 280 50 M500 53 Q540 48 580 53 M800 51 Q840 46 880 51 M1050 52 Q1090 47 1130 52"
+            fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        </svg>
+        <!-- Animated Ship -->
+        <div class="ship-traveler">
+          <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+            <!-- Hull -->
+            <path d="M10 40 L90 40 L82 54 L18 54 Z" fill="#1e3a5f" stroke="#3B82F6" stroke-width="1.2"/>
+            <!-- Deck -->
+            <rect x="14" y="30" width="72" height="12" rx="2" fill="#162840" stroke="#3B82F6" stroke-width="0.8"/>
+            <!-- Cabin -->
+            <rect x="28" y="14" width="38" height="18" rx="2" fill="#0d1e33" stroke="#3B82F6" stroke-width="0.8"/>
+            <!-- Windows -->
+            <rect x="32" y="18" width="7" height="5" rx="1" fill="#3B82F6" opacity="0.8"/>
+            <rect x="43" y="18" width="7" height="5" rx="1" fill="#3B82F6" opacity="0.6"/>
+            <rect x="54" y="18" width="7" height="5" rx="1" fill="#60a5fa" opacity="0.5"/>
+            <!-- Mast -->
+            <line x1="46" y1="2" x2="46" y2="14" stroke="#3B82F6" stroke-width="1.5"/>
+            <!-- Flag -->
+            <polygon points="46,3 60,7 46,11" fill="#3B82F6"/>
+            <!-- Funnel -->
+            <rect x="62" y="18" width="10" height="14" rx="1.5" fill="#162840" stroke="#3B82F6" stroke-width="0.7"/>
+            <!-- Wake lines -->
+            <path d="M8 50 Q5 48 0 49" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+            <path d="M6 54 Q0 52 -8 53" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TIMELINE ── -->
+    <div class="timeline-wrapper">
+      <div class="timeline-line"></div>
+
+      <!-- Item 1 -->
+      <div class="timeline-item item-left">
+        <div class="timeline-content">
+          <div class="tl-year" data-i18n="tl1Year">2014 · Foundation</div>
+          <div class="tl-icon"><i class="fa-solid fa-ship"></i></div>
+          <div class="tl-title" data-i18n="tl1Title">PortEx is Founded</div>
+          <div class="tl-desc" data-i18n="tl1Desc">
+            Established in Istanbul, Turkey as a specialist maritime logistics firm.
+            Initial focus on LCL sea freight between Turkish ports and the Middle East.
+          </div>
+          <span class="tl-badge" data-i18n="tl1Badge">Sea Freight</span>
+        </div>
+        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-connector"></div>
+      </div>
+<!-- Item 2 -->
+      <div class="timeline-item item-right">
+        <div class="timeline-connector"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-content">
+          <div class="tl-year" data-i18n="tl2Year">2015 · Expansion</div>
+          <div class="tl-icon"><i class="fa-solid fa-plane"></i></div>
+          <div class="tl-title" data-i18n="tl2Title">Air Freight Division Launched</div>
+          <div class="tl-desc" data-i18n="tl2Desc">
+            Expanded into air freight services through IST and SAW airports.
+            Partnered with 12 airline carriers to cover 200+ international routes.
+          </div>
+          <span class="tl-badge" data-i18n="tl2Badge">Air Freight</span>
+        </div>
+      </div>
+<!-- Item 3 -->
+      <div class="timeline-item item-left">
+        <div class="timeline-content">
+          <div class="tl-year" data-i18n="tl3Year">2016 · Milestone</div>
+          <div class="tl-icon"><i class="fa-solid fa-globe"></i></div>
+          <div class="tl-title" data-i18n="tl3Title">EMENA Operations Begin</div>
+          <div class="tl-desc" data-i18n="tl3Desc">
+            Opened full export operations across Europe, Middle East, and North Africa.
+            Established commercial agreements with distributors in 8 new countries.
+          </div>
+          <span class="tl-badge" data-i18n="tl3Badge">8 New Markets</span>
+        </div>
+        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-connector"></div>
+      </div>
+<!-- Item 4 -->
+      <div class="timeline-item item-right">
+        <div class="timeline-connector"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-content">
+          <div class="tl-year" data-i18n="tl4Year">2018 · Innovation</div>
+          <div class="tl-icon"><i class="fa-solid fa-chart-column"></i></div>
+          <div class="tl-title" data-i18n="tl4Title">Digital Platform Developed</div>
+          <div class="tl-desc" data-i18n="tl4Desc">
+            Launched the PortEx freight rate calculator and shipment tracking platform,
+            reducing quote turnaround from 48 hours to under 5 minutes.
+          </div>
+          <span class="tl-badge" data-i18n="tl4Badge">Tech Innovation</span>
+        </div>
+      </div>
+<!-- Item 5 -->
+      <div class="timeline-item item-left">
+        <div class="timeline-content">
+          <div class="tl-year" data-i18n="tl5Year">2019 · Growth</div>
+          <div class="tl-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <div class="tl-title" data-i18n="tl5Title">40% Volume Increase</div>
+          <div class="tl-desc" data-i18n="tl5Desc">
+            Achieved a 40% increase in annual shipment volume through strategic pricing
+            optimization, improved demand planning, and cross-team coordination.
+          </div>
+          <span class="tl-badge" data-i18n="tl5Badge">+40% Volume</span>
+        </div>
+        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-connector"></div>
+      </div>
+<!-- Item 6 -->
+      <div class="timeline-item item-right">
+        <div class="timeline-connector"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-content">
+          <div class="tl-year" data-i18n="tl6Year">2020 · Resilience</div>
+          <div class="tl-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="tl-title" data-i18n="tl6Title">COVID-19 Supply Chain Response</div>
+          <div class="tl-desc" data-i18n="tl6Desc2">
+            Maintained 95% service continuity during global disruptions by rapidly pivoting
+            to charter air freight and alternative sea routes.
+          </div>
+          <span class="tl-badge" data-i18n="tl6Badge2">Crisis Management</span>
+        </div>
+      </div>
+<!-- Item 7 -->
+      <div class="timeline-item item-left">
+        <div class="timeline-content">
+          <div class="tl-year" data-i18n="tl7Year2">2021 · Recognition</div>
+          <div class="tl-icon"><i class="fa-solid fa-trophy"></i></div>
+          <div class="tl-title" data-i18n="tl7Title2">International Trade Exhibitions</div>
+          <div class="tl-desc" data-i18n="tl7Desc2">
+            Represented PortEx at global trade fairs including transport logistic Munich
+            and Turkey's premier logistics forums, establishing key international partnerships.
+          </div>
+          <span class="tl-badge" data-i18n="tl7Badge2">Global Presence</span>
+        </div>
+        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-connector"></div>
+      </div>
+<!-- Item 8 -->
+      <div class="timeline-item item-right">
+        <div class="timeline-connector"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-content">
+          <div class="tl-year" data-i18n="tl8Year2">2022 · Efficiency</div>
+          <div class="tl-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="tl-title" data-i18n="tl8Title2">20% Faster Delivery Times</div>
+          <div class="tl-desc" data-i18n="tl8Desc2">
+            Optimized customs clearance workflows and port-to-door logistics pipelines,
+            reducing average delivery time by 20% across all trade lanes.
+          </div>
+          <span class="tl-badge" data-i18n="tl8Badge2">-20% Delivery Time</span>
+        </div>
+      </div>
+<!-- Item 9 -->
+      <div class="timeline-item item-left">
+        <div class="timeline-content">
+          <div class="tl-year" data-i18n="tl9Year2">2023 · Scale</div>
+          <div class="tl-icon"><i class="fa-solid fa-network-wired"></i></div>
+          <div class="tl-title" data-i18n="tl9Title2">50+ Countries Served</div>
+          <div class="tl-desc" data-i18n="tl9Desc2">
+            Reached a milestone of active operations in over 50 countries,
+            cementing PortEx's position as a leading Turkey-based freight forwarder.
+          </div>
+          <span class="tl-badge" data-i18n="tl9Badge2">50+ Countries</span>
+        </div>
+        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-connector"></div>
+      </div>
+<!-- Item 10 -->
+      <div class="timeline-item item-right">
+        <div class="timeline-connector"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-content">
+          <div class="tl-year" data-i18n="tl10Year">2024–Present · Future</div>
+          <div class="tl-icon"><i class="fa-solid fa-rocket"></i></div>
+          <div class="tl-title" data-i18n="tl10Title">AI-Powered Freight Platform</div>
+          <div class="tl-desc" data-i18n="tl10Desc">
+            Continuing to evolve with real-time freight intelligence, HS code automation,
+            and integrated customs filing — making PortEx the smartest freight platform on the market.
+          </div>
+          <span class="tl-badge" data-i18n="tl10Badge">Innovation</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <div class="footer-logo">Port<span class="logo-accent">Ex</span><div class="logo-dot"></div></div>
+        <p class="footer-tagline" data-i18n="footerTagline">Intelligent Freight Platform</p>
+        <p class="footer-copy" data-i18n="footerCopy">Made by NoireByte &copy; 2025</p>
+      </div>
+      <div class="footer-col footer-nav">
+        <a href="index.html" data-i18n="navHome">Home</a>
+        <a href="calculator.html" data-i18n="navCalculator">Calculator</a>
+        <a href="activities.html" data-i18n="navActivities">Our Activities</a>
+        <a href="about.html" data-i18n="navAbout">About Us</a>
+        <a href="contact.html" data-i18n="navContact">Contact</a>
+      </div>
+      <div class="footer-col footer-cta">
+        <p class="footer-cta-text" data-i18n="footerCtaText">Need a freight quote?</p>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.5rem;">
+          <i class="fa-solid fa-location-dot" style="color:#3B82F6;margin-right:6px;"></i>
+          Büyükçekmece, İstanbul
+        </p>
+        <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.4rem;">
+          <i class="fa-solid fa-phone" style="color:#3B82F6;margin-right:6px;"></i>
+          +44 7781 505971
+        </p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span data-i18n="footerRights">&copy; 2025 NoireByte — All rights reserved</span>
+    </div>
+  </footer>
+
+  <script src="public/i18n.js"></script>
+  <script src="public/shared-nav.js"></script>
+  <script>
+    // Intersection Observer for scroll-reveal
+    const items = document.querySelectorAll('.timeline-item');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, idx) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, idx * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(item => observer.observe(item));
+  </script>
+</body>
+</html>
