@@ -92,6 +92,13 @@ document.getElementById('loginForm').addEventListener('submit', async e => {
   const btn = document.getElementById('loginSubmitBtn');
   btn.textContent = '...';
   btn.disabled = true;
+
+  // Client-side credentials fallback (for static hosting like GitHub Pages)
+  const LOCAL_CREDS = {
+    admin: { password: 'portex2025', role: 'admin' },
+    guest: { password: 'portex123', role: 'user' }
+  };
+
   try {
     const res = await fetch('/api/auth/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
     const data = await res.json();
@@ -105,7 +112,17 @@ document.getElementById('loginForm').addEventListener('submit', async e => {
       errEl.textContent = t('loginError');
     }
   } catch (err) {
-    errEl.textContent = 'Server error';
+    // Fallback: client-side auth when server is unavailable
+    const cred = LOCAL_CREDS[username.toLowerCase()];
+    if (cred && cred.password === password) {
+      localStorage.setItem('portex_token', 'local_' + Date.now());
+      localStorage.setItem('portex_role', cred.role);
+      closeLoginModal();
+      updateAuthUI();
+      showToast(t('welcomeMsg') + ' <i class="fa-solid fa-face-smile"></i>');
+    } else {
+      errEl.textContent = t('loginError');
+    }
   } finally {
     btn.textContent = t('loginBtn');
     btn.disabled = false;
