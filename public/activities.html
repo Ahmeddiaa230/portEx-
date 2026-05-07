@@ -9,9 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="public/all.min.css">
-  <link rel="stylesheet" href="public/style.css">
-  <link rel="stylesheet" href="public/navbar.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="navbar.css">
   <style>
     /* ───── Activities Page ───── */
     .activities-page { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 6rem; }
@@ -94,15 +93,16 @@
       margin-bottom: 4rem; position: relative;
       opacity: 0; transform: translateY(30px);
       transition: opacity 0.6s ease, transform 0.6s ease;
+      width: 100%;
     }
     .timeline-item.visible { opacity: 1; transform: translateY(0); }
 
     /* Alternating left/right */
-    .timeline-item:nth-child(odd) {
-      flex-direction: row; text-align: right;
+    .item-left {
+      justify-content: flex-start; text-align: right;
     }
-    .timeline-item:nth-child(even) {
-      flex-direction: row-reverse; text-align: left;
+    .item-right {
+      justify-content: flex-end; text-align: left;
     }
 
     .timeline-content {
@@ -145,7 +145,7 @@
       width: 100%; height: 2px;
       background: linear-gradient(to right, transparent, rgba(59,130,246,0.4));
     }
-    .timeline-item:nth-child(even) .timeline-connector-line {
+    .item-right .timeline-connector-line {
       background: linear-gradient(to left, transparent, rgba(59,130,246,0.4));
     }
 
@@ -257,7 +257,7 @@
       <div class="timeline-line"></div>
 
       <!-- Item 1 -->
-      <div class="timeline-item">
+      <div class="timeline-item item-left">
         <div class="timeline-content">
           <div class="tl-year">2014 · Foundation</div>
           <div class="tl-icon">🚢</div>
@@ -270,12 +270,11 @@
         </div>
         <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
         <div class="timeline-dot"></div>
-        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-connector"></div>
       </div>
-
-      <!-- Item 2 -->
-      <div class="timeline-item">
-        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+<!-- Item 2 -->
+      <div class="timeline-item item-right">
+        <div class="timeline-connector"></div>
         <div class="timeline-dot"></div>
         <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
         <div class="timeline-content">
@@ -289,9 +288,8 @@
           <span class="tl-badge">Air Freight</span>
         </div>
       </div>
-
-      <!-- Item 3 -->
-      <div class="timeline-item">
+<!-- Item 3 -->
+      <div class="timeline-item item-left">
         <div class="timeline-content">
           <div class="tl-year">2016 · Milestone</div>
           <div class="tl-icon">🌍</div>
@@ -304,12 +302,11 @@
         </div>
         <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
         <div class="timeline-dot"></div>
-        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-connector"></div>
       </div>
-
-      <!-- Item 4 -->
-      <div class="timeline-item">
-        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+<!-- Item 4 -->
+      <div class="timeline-item item-right">
+        <div class="timeline-connector"></div>
         <div class="timeline-dot"></div>
         <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
         <div class="timeline-content">
@@ -323,9 +320,8 @@
           <span class="tl-badge">Tech Innovation</span>
         </div>
       </div>
-
-      <!-- Item 5 -->
-      <div class="timeline-item">
+<!-- Item 5 -->
+      <div class="timeline-item item-left">
         <div class="timeline-content">
           <div class="tl-year">2019 · Growth</div>
           <div class="tl-icon">📈</div>
@@ -338,12 +334,11 @@
         </div>
         <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
         <div class="timeline-dot"></div>
-        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-connector"></div>
       </div>
-
-      <!-- Item 6 -->
-      <div class="timeline-item">
-        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+<!-- Item 6 -->
+      <div class="timeline-item item-right">
+        <div class="timeline-connector"></div>
         <div class="timeline-dot"></div>
         <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
         <div class="timeline-content">
@@ -357,9 +352,8 @@
           <span class="tl-badge">Crisis Management</span>
         </div>
       </div>
-
-      <!-- Item 7 -->
-      <div class="timeline-item">
+<!-- Item 7 -->
+      <div class="timeline-item item-left">
         <div class="timeline-content">
           <div class="tl-year">2021 · Recognition</div>
           <div class="tl-icon">🏆</div>
@@ -372,12 +366,11 @@
         </div>
         <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
         <div class="timeline-dot"></div>
-        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-connector"></div>
       </div>
-
-      <!-- Item 8 -->
-      <div class="timeline-item">
-        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+<!-- Item 8 -->
+      <div class="timeline-item item-right">
+        <div class="timeline-connector"></div>
         <div class="timeline-dot"></div>
         <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
         <div class="timeline-content">
@@ -391,9 +384,8 @@
           <span class="tl-badge">-20% Delivery Time</span>
         </div>
       </div>
-
-      <!-- Item 9 -->
-      <div class="timeline-item">
+<!-- Item 9 -->
+      <div class="timeline-item item-left">
         <div class="timeline-content">
           <div class="tl-year">2023 · Scale</div>
           <div class="tl-icon">🌐</div>
@@ -406,12 +398,11 @@
         </div>
         <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
         <div class="timeline-dot"></div>
-        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+        <div class="timeline-connector"></div>
       </div>
-
-      <!-- Item 10 -->
-      <div class="timeline-item">
-        <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
+<!-- Item 10 -->
+      <div class="timeline-item item-right">
+        <div class="timeline-connector"></div>
         <div class="timeline-dot"></div>
         <div class="timeline-connector"><div class="timeline-connector-line"></div></div>
         <div class="timeline-content">
@@ -461,7 +452,7 @@
     </div>
   </footer>
 
-  <script src="public/shared-nav.js"></script>
+  <script src="shared-nav.js"></script>
   <script>
     // Intersection Observer for scroll-reveal
     const items = document.querySelectorAll('.timeline-item');
