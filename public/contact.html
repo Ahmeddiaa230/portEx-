@@ -187,9 +187,9 @@
 <body class="multipage">
 
   <section class="contact-hero">
-    <div class="contact-tag">Get In Touch</div>
-    <h1>Let's Talk <span>Freight</span></h1>
-    <p>Reach out for rates, customs advice, or to discuss your next shipment. Our team responds within 24 hours.</p>
+    <div class="contact-tag" data-i18n="contactTag">Get In Touch</div>
+    <h1 data-i18n="contactHeroTitle">Let's Talk <span>Freight</span></h1>
+    <p data-i18n="contactHeroSub">Reach out for rates, customs advice, or to discuss your next shipment. Our team responds within 24 hours.</p>
   </section>
 
   <div class="contact-page">
@@ -202,10 +202,10 @@
         <div class="contact-card">
           <div class="cc-header">
             <div class="cc-icon"><i class="fa-solid fa-phone"></i></div>
-            <div class="cc-label">Phone</div>
+            <div class="cc-label" data-i18n="lblPhone">Phone</div>
           </div>
           <div class="cc-value">+44 7781 505971</div>
-          <div class="cc-sub">Available Mon–Sat, 09:00–18:00 (TR)</div>
+          <div class="cc-sub" data-i18n="subPhone">Available Mon–Sat, 09:00–18:00 (TR)</div>
         </div>
 
         <!-- WhatsApp -->
@@ -214,12 +214,12 @@
             <div class="cc-icon" style="background:rgba(37,211,102,0.1);color:#25D366;">
               <i class="fa-brands fa-whatsapp"></i>
             </div>
-            <div class="cc-label">WhatsApp</div>
+            <div class="cc-label" data-i18n="lblWhatsapp">WhatsApp</div>
           </div>
           <div class="cc-value">+44 7781 505971</div>
-          <div class="cc-sub">Send us a message for a quick response.</div>
+          <div class="cc-sub" data-i18n="subWhatsapp">Send us a message for a quick response.</div>
           <a href="https://wa.me/447781505971" target="_blank" class="cc-wa-btn">
-            <i class="fa-brands fa-whatsapp"></i> Open WhatsApp
+            <i class="fa-brands fa-whatsapp"></i> <span data-i18n="btnWhatsapp">Open WhatsApp</span>
           </a>
         </div>
 
@@ -227,9 +227,9 @@
         <div class="contact-card">
           <div class="cc-header">
             <div class="cc-icon"><i class="fa-solid fa-location-dot"></i></div>
-            <div class="cc-label">Office Location</div>
+            <div class="cc-label" data-i18n="lblLocation">Office Location</div>
           </div>
-          <div class="cc-value">İstanbul, Turkey</div>
+          <div class="cc-value" data-i18n="valLocation">İstanbul, Turkey</div>
           <div class="cc-sub">
             Cumhuriyet, Gürpınar Yolu Cad.<br>
             A Blok No: 10/3/70<br>
@@ -246,7 +246,7 @@
           </iframe>
           <div class="map-address">
             <i class="fa-solid fa-map-pin"></i>
-            <span>Büyükçekmece, İstanbul — 15 mins from airport</span>
+            <span data-i18n="mapDesc">Büyükçekmece, İstanbul — 15 mins from airport</span>
           </div>
         </div>
 
@@ -254,51 +254,49 @@
 
       <!-- RIGHT: Contact Form -->
       <div class="contact-form-col">
-        <div class="form-title">Send Us a Message</div>
-        <div class="form-subtitle">Fill in the form below and we'll get back to you as soon as possible.</div>
+        <div class="form-title" data-i18n="formTitle">Send Us a Message</div>
+        <div class="form-subtitle" data-i18n="formSub">Fill in the form below and we'll get back to you as soon as possible.</div>
 
         <div id="contactForm">
           <div class="form-row">
             <div class="form-group">
-              <label for="fromName">Full Name</label>
+              <label for="fromName" data-i18n="lblFullName">Full Name</label>
               <input type="text" id="fromName" placeholder="Ahmed Al-Sayed" required>
             </div>
             <div class="form-group">
-              <label for="fromEmail">Email Address</label>
+              <label for="fromEmail" data-i18n="lblEmail">Email Address</label>
               <input type="email" id="fromEmail" placeholder="ahmed@company.com" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="fromPhone">Phone / WhatsApp</label>
+              <label for="fromPhone" data-i18n="lblPhoneForm">Phone / WhatsApp</label>
               <input type="tel" id="fromPhone" placeholder="+1 234 567 8900">
             </div>
             <div class="form-group">
-              <label for="inquiryType">Inquiry Type</label>
+              <label for="inquiryType" data-i18n="lblInquiry">Inquiry Type</label>
               <select id="inquiryType">
-                <option value="Sea Freight">Sea Freight</option>
-                <option value="Air Freight">Air Freight</option>
-                <option value="Customs Clearance">Customs Clearance</option>
-                <option value="Warehousing">Warehousing</option>
-                <option value="General">General Inquiry</option>
+                <option value="Sea Freight" data-i18n="optSea">Sea Freight</option>
+                <option value="Air Freight" data-i18n="optAir">Air Freight</option>
+                <option value="Customs Clearance" data-i18n="optCustoms">Customs Clearance</option>
+                <option value="Warehousing" data-i18n="optWarehouse">Warehousing</option>
+                <option value="General" data-i18n="optGeneral">General Inquiry</option>
               </select>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="subject">Subject</label>
+            <label for="subject" data-i18n="lblSubject">Subject</label>
             <input type="text" id="subject" placeholder="LCL shipment from Istanbul to Dubai">
           </div>
 
           <div class="form-group">
-            <label for="message">Message</label>
+            <label for="message" data-i18n="lblMessage">Message</label>
             <textarea id="message" placeholder="Tell us about your cargo, origin, destination, and any special requirements..."></textarea>
           </div>
 
-          <button class="form-submit-btn" id="submitBtn" onclick="sendEmail()">
-            <i class="fa-solid fa-paper-plane"></i> Send Message
-          </button>
+          <button class="form-submit-btn" id="submitBtn" onclick="sendEmail()" data-i18n="btnSend"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
         </div>
       </div>
 
@@ -313,18 +311,18 @@
     <div class="footer-grid">
       <div class="footer-col footer-brand">
         <div class="footer-logo">Port<span class="logo-accent">Ex</span><div class="logo-dot"></div></div>
-        <p class="footer-tagline">Intelligent Freight Platform</p>
-        <p class="footer-copy">Made by NoireByte &copy; 2025</p>
+        <p class="footer-tagline" data-i18n="footerTagline">Intelligent Freight Platform</p>
+        <p class="footer-copy" data-i18n="footerCopy">Made by NoireByte &copy; 2025</p>
       </div>
       <div class="footer-col footer-nav">
-        <a href="index.html">Home</a>
-        <a href="calculator.html">Calculator</a>
-        <a href="activities.html">Our Activities</a>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact</a>
+        <a href="index.html" data-i18n="navHome">Home</a>
+        <a href="calculator.html" data-i18n="navCalculator">Calculator</a>
+        <a href="activities.html" data-i18n="navActivities">Our Activities</a>
+        <a href="about.html" data-i18n="navAbout">About Us</a>
+        <a href="contact.html" data-i18n="navContact">Contact</a>
       </div>
       <div class="footer-col footer-cta">
-        <p class="footer-cta-text">Need a freight quote?</p>
+        <p class="footer-cta-text" data-i18n="footerCtaText">Need a freight quote?</p>
         <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.5rem;">
           <i class="fa-solid fa-location-dot" style="color:#3B82F6;margin-right:6px;"></i>
           Büyükçekmece, İstanbul
@@ -332,10 +330,11 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; 2025 NoireByte — All rights reserved</span>
+      <span data-i18n="footerRights">&copy; 2025 NoireByte — All rights reserved</span>
     </div>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="shared-nav.js"></script>
   <script>
     // ── EmailJS Init ──

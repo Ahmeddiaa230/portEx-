@@ -229,7 +229,7 @@
             <!-- Result Card -->
             <div class="result-card" id="resultCard">
               <!-- Admin badge — visible only when role===admin -->
-              <div class="admin-badge hidden" id="adminBadge">ADMIN VIEW — Cost Price</div>
+              <div class="admin-badge hidden" id="adminBadge" data-i18n="adminBadge">ADMIN VIEW — Cost Price</div>
 
               <h3 data-i18n="rateBreakdown">Rate Breakdown</h3>
               <div class="result-list">
@@ -254,11 +254,11 @@
                   <span id="resCaf" dir="ltr">-</span>
                 </div>
                 <div class="result-row" data-tip="tipThcO">
-                  <span>THC Origin:</span>
+                  <span data-i18n="thcOriginLabel">THC Origin:</span>
                   <span id="resThcOrigin" dir="ltr">-</span>
                 </div>
                 <div class="result-row" data-tip="tipThcD">
-                  <span>THC Destination:</span>
+                  <span data-i18n="thcDestLabel">THC Destination:</span>
                   <span id="resThcDest" dir="ltr">-</span>
                 </div>
 
@@ -421,17 +421,17 @@
       <div class="footer-col footer-brand">
         <div class="footer-logo">Port<span class="logo-accent">Ex</span><div class="logo-dot"></div></div>
         <p class="footer-tagline" data-i18n="footerTagline">Intelligent Freight Platform</p>
-        <p class="footer-copy">Made by NoireByte &copy; 2025</p>
+        <p class="footer-copy" data-i18n="footerCopy">Made by NoireByte &copy; 2025</p>
       </div>
       <div class="footer-col footer-nav">
         <a href="index.html" data-i18n="navHome">Home</a>
         <a href="calculator.html" data-i18n="navCalculator">Calculator</a>
-        <a href="activities.html">Our Activities</a>
+        <a href="activities.html" data-i18n="navActivities">Our Activities</a>
         <a href="about.html" data-i18n="navAbout">About Us</a>
-        <a href="contact.html">Contact</a>
+        <a href="contact.html" data-i18n="navContact">Contact</a>
       </div>
       <div class="footer-col footer-cta">
-        <p class="footer-cta-text">Need a freight quote?</p>
+        <p class="footer-cta-text" data-i18n="footerCtaText">Need a freight quote?</p>
         <p style="color:var(--text-dim);font-size:0.85rem;margin-top:0.5rem;">
           <i class="fa-solid fa-location-dot" style="color:#3B82F6;margin-right:6px;"></i>
           Büyükçekmece, İstanbul, Turkey
@@ -447,6 +447,7 @@
     </div>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="shared-nav.js"></script>
   <script src="app.js"></script>
   <script>

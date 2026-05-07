@@ -68,11 +68,11 @@
       <div class="logo-dot"></div>
     </a>
     <ul class="navbar-links">
-      <li><a href="index.html" class="${isActive('index.html')}">Home</a></li>
-      <li><a href="calculator.html" class="${isActive('calculator.html')}">Calculator</a></li>
-      <li><a href="activities.html" class="${isActive('activities.html')}">Our Activities</a></li>
-      <li><a href="about.html" class="${isActive('about.html')}">About Us</a></li>
-      <li><a href="contact.html" class="${isActive('contact.html')}">Contact</a></li>
+      <li><a href="index.html" class="${isActive('index.html')}" data-i18n="navHome">Home</a></li>
+      <li><a href="calculator.html" class="${isActive('calculator.html')}" data-i18n="navCalculator">Calculator</a></li>
+      <li><a href="activities.html" class="${isActive('activities.html')}" data-i18n="navActivities">Our Activities</a></li>
+      <li><a href="about.html" class="${isActive('about.html')}" data-i18n="navAbout">About Us</a></li>
+      <li><a href="contact.html" class="${isActive('contact.html')}" data-i18n="navContact">Contact</a></li>
     </ul>
     <div class="navbar-right">
       <!-- Auth button -->
@@ -92,11 +92,11 @@
     </div>
   </nav>
   <div class="mobile-nav-drawer" id="mobileDrawer">
-    <a href="index.html" class="${isActive('index.html')}">Home</a>
-    <a href="calculator.html" class="${isActive('calculator.html')}">Calculator</a>
-    <a href="activities.html" class="${isActive('activities.html')}">Our Activities</a>
-    <a href="about.html" class="${isActive('about.html')}">About Us</a>
-    <a href="contact.html" class="${isActive('contact.html')}">Contact</a>
+    <a href="index.html" class="${isActive('index.html')}" data-i18n="navHome">Home</a>
+    <a href="calculator.html" class="${isActive('calculator.html')}" data-i18n="navCalculator">Calculator</a>
+    <a href="activities.html" class="${isActive('activities.html')}" data-i18n="navActivities">Our Activities</a>
+    <a href="about.html" class="${isActive('about.html')}" data-i18n="navAbout">About Us</a>
+    <a href="contact.html" class="${isActive('contact.html')}" data-i18n="navContact">Contact</a>
   </div>
   <div class="navbar-spacer"></div>`;
 
