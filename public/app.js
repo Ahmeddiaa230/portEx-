@@ -1,4 +1,5 @@
 // ─── Theme ────────────────────────────────────────────────────────────────────
+let currentMode = 'cbm';
 let isDark = localStorage.getItem('portex_theme') !== 'light';
 function applyTheme() {
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
